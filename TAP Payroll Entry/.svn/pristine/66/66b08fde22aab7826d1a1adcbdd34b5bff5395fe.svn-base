@@ -1,0 +1,228 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core">
+    <af:pageTemplate viewId="/oracle/apps/uikit/common/pageTemplates/MainPageTemplate.jspx" id="pt1">
+        <f:facet name="pageContents">
+            <af:panelGroupLayout layout="vertical" id="pgl2">
+                <af:panelGroupLayout layout="vertical" id="pgl1">                    
+                        <af:panelHeader text="TAP Donation Form Payroll" id="ph1">
+                                <af:query id="qryId1" headerText="Search" disclosed="true"
+                                          value="#{bindings.SearchVCQuery.queryDescriptor}"
+                                          model="#{bindings.SearchVCQuery.queryModel}"
+                                          queryListener="#{bindings.SearchVCQuery.processQuery}"
+                                          queryOperationListener="#{bindings.SearchVCQuery.processQueryOperation}"
+                                          resultComponentId="::pc1:resId1"/>                           
+                    </af:panelHeader>                    
+                </af:panelGroupLayout>
+                <af:panelBox id="pb1" showDisclosure="false" inlineStyle="border-color:transparent;">
+                    <f:facet name="toolbar"/>
+                    <af:panelCollection id="pc1" styleClass="AFStretchWidth">
+                        <f:facet name="menus"/>
+                        <f:facet name="toolbar">
+                            <af:toolbar id="t2" flex="1">
+                                  <af:button text="Submit" id="b3"
+                                           actionListener="#{backingBeanScope.searchTapForm.onclickSubmit}"/>
+                                <af:popup id="p1" contentDelivery="lazyUncached" clientComponent="true"
+                                         binding="#{backingBeanScope.searchTapForm.myPopup}">
+                                    <af:dialog type="none" id="d2" contentHeight="-1" modal="false" title="Information"
+                                               contentWidth="200" inlineStyle="background-color: Highlight; border-color:skyblue;">
+                                        <f:facet name="buttonBar">
+                                            <af:button text="OK"                                                       
+                                                       id="b2"
+                                                       actionListener="#{backingBeanScope.searchTapForm.hidePopup}"/>
+                                        </f:facet>
+                                        <af:panelGroupLayout layout="horizontal" halign="center" id="pgl4">
+                                            <af:outputText value="#{pageFlowScope.showMsg}" inlineStyle="font-size:small; font-weight:bold; color:black;"
+                                                           
+                                                           id="ot2" partialTriggers="b3"
+                                                           binding="#{backingBeanScope.searchTapForm.messageBind}"/>
+                                        </af:panelGroupLayout>
+                                    </af:dialog>
+                                </af:popup>
+                            <af:button text="Export to Excel (All Rows)" id="b1">
+                            <af:exportCollectionActionListener exportedId="resId1"
+                                                   type="excelHTML"
+                                                   filename="Tap Donation Form Payroll.xls"
+                                                   title="Payroll (All Rows)"/>
+                            </af:button>
+                            </af:toolbar>
+                        </f:facet>
+                        <f:facet name="statusbar"/>
+                         <af:table value="#{bindings.TapEmpForm_ROVO.collectionModel}" var="row"
+                                      rows="#{bindings.TapEmpForm_ROVO.rangeSize}"
+                                      emptyText="#{bindings.TapEmpForm_ROVO.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                      rowBandingInterval="0"
+                                      selectedRowKeys="#{bindings.TapEmpForm_ROVO.collectionModel.selectedRow}"
+                                      selectionListener="#{bindings.TapEmpForm_ROVO.collectionModel.makeCurrent}"
+                                      rowSelection="single" fetchSize="#{bindings.TapEmpForm_ROVO.rangeSize}"
+                                      id="resId1" scrollPolicy="page">
+                            <af:column headerText="Active" id="c1" align="center" width="100">
+                                <af:selectBooleanCheckbox value="#{row.bindings.Trans_Active.inputValue}"
+                                                          label="#{row.bindings.Trans_Active.label}"
+                                                          disabled="#{row.bindings.ApprovalStatus.inputValue ne 'SUBMITTED' ? true : false}"
+                                                          autoSubmit="true"
+                                                          shortDesc="#{bindings.TapEmpForm_ROVO.hints.Trans_Active.tooltip}"
+                                                          id="sbc1"/>
+                            </af:column>
+                            <af:column sortProperty="#{bindings.TapEmpForm_ROVO.hints.RequestNo.name}"
+                                           sortable="true" align="center" width="100"
+                                           headerText="#{bindings.TapEmpForm_ROVO.hints.RequestNo.label}" id="resId1c1">
+                                    <af:outputText value="#{row.RequestNo}"
+                                                   shortDesc="#{bindings.TapEmpForm_ROVO.hints.RequestNo.tooltip}"
+                                                   id="ot1"/>
+                                </af:column>
+                                  <af:column sortProperty="#{bindings.TapEmpForm_ROVO.hints.EmployeeNo.name}"
+                                           sortable="true" width="150" align="center"
+                                           headerText="#{bindings.TapEmpForm_ROVO.hints.EmployeeNo.label}"
+                                           id="resId1c3">
+                                    <af:outputText value="#{row.EmployeeNo}"
+                                                   shortDesc="#{bindings.TapEmpForm_ROVO.hints.EmployeeNo.tooltip}"
+                                                   id="ot3"/>
+                                </af:column>
+                                 <af:column sortProperty="#{bindings.TapEmpForm_ROVO.hints.EmployeeName.name}"
+                                         align="center"  width="150"  sortable="true"
+                                           headerText="#{bindings.TapEmpForm_ROVO.hints.EmployeeName.label}"
+                                           id="resId1c4">
+                                    <af:outputText value="#{row.EmployeeName}"
+                                                   shortDesc="#{bindings.TapEmpForm_ROVO.hints.EmployeeName.tooltip}"
+                                                   id="ot4"/>
+                                </af:column>
+                            <af:column headerText="#{bindings.TapEmpForm_ROVO.hints.DonationMonth.label}"
+                            align="center"  width="100"  sortable="true" id="c2">
+                                <af:outputText value="#{row.DonationMonth}"
+                                               shortDesc="#{bindings.TapEmpForm_ROVO.hints.DonationMonth.tooltip}"
+                                               id="ot16"/>
+                            </af:column>
+                            <af:column sortProperty="#{bindings.TapEmpForm_ROVO.hints.RequestDate.name}"
+                                       align="center"   width="150"  sortable="true"
+                                           headerText="#{bindings.TapEmpForm_ROVO.hints.RequestDate.label}"
+                                           id="resId1c2">
+                                <af:inputDate value="#{row.bindings.RequestDate.inputValue}" readOnly="true"
+                                              label="#{bindings.TapEmpForm_ROVO.hints.RequestDate.label}"
+                                              required="#{bindings.TapEmpForm_ROVO.hints.RequestDate.mandatory}"
+                                              columns="#{bindings.TapEmpForm_ROVO.hints.RequestDate.displayWidth}"
+                                              shortDesc="#{bindings.TapEmpForm_ROVO.hints.RequestDate.tooltip}"
+                                              id="id1">
+                                    <f:validator binding="#{row.bindings.RequestDate.validator}"/>
+                                    <af:convertDateTime pattern="dd-MMM-yyyy"/>
+                                </af:inputDate>
+                            </af:column>
+                              
+                               
+                                <af:column sortProperty="#{bindings.TapEmpForm_ROVO.hints.DepartmentName.name}"
+                                           sortable="true"
+                                            align="center" width="150" 
+                                            headerText="#{bindings.TapEmpForm_ROVO.hints.DepartmentName.label}"
+                                           id="resId1c5">
+                                    <af:outputText value="#{row.DepartmentName}"
+                                                   shortDesc="#{bindings.TapEmpForm_ROVO.hints.DepartmentName.tooltip}"
+                                                   id="ot5"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.TapEmpForm_ROVO.hints.PayElementName.name}"
+                                           sortable="true"
+                                           align="center" width="150" headerText="#{bindings.TapEmpForm_ROVO.hints.PayElementName.label}"
+                                           id="resId1c6">
+                                    <af:outputText value="#{row.PayElementName}"
+                                                   shortDesc="#{bindings.TapEmpForm_ROVO.hints.PayElementName.tooltip}"
+                                                   id="ot6"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.TapEmpForm_ROVO.hints.Comments.name}"
+                                          align="center"   width="150" sortable="true" headerText="#{bindings.TapEmpForm_ROVO.hints.Comments.label}"
+                                           id="resId1c7">
+                                    <af:outputText value="#{row.Comments}"
+                                                   shortDesc="#{bindings.TapEmpForm_ROVO.hints.Comments.tooltip}"
+                                                   id="ot7"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.TapEmpForm_ROVO.hints.ApprovalStatus.name}"
+                                           sortable="true"
+                                        align="center"   width="150"   headerText="#{bindings.TapEmpForm_ROVO.hints.ApprovalStatus.label}"
+                                           id="resId1c8">
+                                    <af:outputText value="#{row.ApprovalStatus}"
+                                                   shortDesc="#{bindings.TapEmpForm_ROVO.hints.ApprovalStatus.tooltip}"
+                                                   id="ot8"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.TapEmpForm_ROVO.hints.TapEmpFormId.name}"
+                                         rendered="false"  sortable="true"
+                                           headerText="#{bindings.TapEmpForm_ROVO.hints.TapEmpFormId.label}"
+                                           id="resId1c9">
+                                    <af:outputText value="#{row.TapEmpFormId}"
+                                                   shortDesc="#{bindings.TapEmpForm_ROVO.hints.TapEmpFormId.tooltip}"
+                                                   id="ot9">
+                                        <af:convertNumber groupingUsed="false"
+                                                          pattern="#{bindings.TapEmpForm_ROVO.hints.TapEmpFormId.format}"/>
+                                    </af:outputText>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.TapEmpForm_ROVO.hints.BusinessUnitId.name}"
+                                           sortable="true"
+                                         rendered="false"  headerText="#{bindings.TapEmpForm_ROVO.hints.BusinessUnitId.label}"
+                                           id="resId1c10">
+                                    <af:outputText value="#{row.BusinessUnitId}"
+                                                   shortDesc="#{bindings.TapEmpForm_ROVO.hints.BusinessUnitId.tooltip}"
+                                                   id="ot10">
+                                        <af:convertNumber groupingUsed="false"
+                                                          pattern="#{bindings.TapEmpForm_ROVO.hints.BusinessUnitId.format}"/>
+                                    </af:outputText>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.TapEmpForm_ROVO.hints.PersonId.name}"
+                                        rendered="false"   sortable="true" headerText="#{bindings.TapEmpForm_ROVO.hints.PersonId.label}"
+                                           id="resId1c11">
+                                    <af:outputText value="#{row.PersonId}"
+                                                   shortDesc="#{bindings.TapEmpForm_ROVO.hints.PersonId.tooltip}"
+                                                   id="ot11">
+                                        <af:convertNumber groupingUsed="false"
+                                                          pattern="#{bindings.TapEmpForm_ROVO.hints.PersonId.format}"/>
+                                    </af:outputText>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.TapEmpForm_ROVO.hints.TapEmpLineId.name}"
+                                         rendered="false"  sortable="true"
+                                           headerText="#{bindings.TapEmpForm_ROVO.hints.TapEmpLineId.label}"
+                                           id="resId1c12">
+                                    <af:outputText value="#{row.TapEmpLineId}"
+                                                   shortDesc="#{bindings.TapEmpForm_ROVO.hints.TapEmpLineId.tooltip}"
+                                                   id="ot12">
+                                        <af:convertNumber groupingUsed="false"
+                                                          pattern="#{bindings.TapEmpForm_ROVO.hints.TapEmpLineId.format}"/>
+                                    </af:outputText>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.TapEmpForm_ROVO.hints.AvailableFlag.name}"
+                                         rendered="false"  sortable="true"
+                                           headerText="#{bindings.TapEmpForm_ROVO.hints.AvailableFlag.label}"
+                                           id="resId1c13">
+                                    <af:outputText value="#{row.AvailableFlag}"
+                                                   shortDesc="#{bindings.TapEmpForm_ROVO.hints.AvailableFlag.tooltip}"
+                                                   id="ot13"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.TapEmpForm_ROVO.hints.DonationAmount.name}"
+                                           sortable="true"
+                                        rendered="false"   headerText="#{bindings.TapEmpForm_ROVO.hints.DonationAmount.label}"
+                                           id="resId1c14">
+                                    <af:outputText value="#{row.DonationAmount}"
+                                                   shortDesc="#{bindings.TapEmpForm_ROVO.hints.DonationAmount.tooltip}"
+                                                   id="ot14">
+                                        <af:convertNumber groupingUsed="false"
+                                                          pattern="#{bindings.TapEmpForm_ROVO.hints.DonationAmount.format}"/>
+                                    </af:outputText>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.TapEmpForm_ROVO.hints.DonationMonth.name}"
+                                        rendered="false"   sortable="true"
+                                           headerText="#{bindings.TapEmpForm_ROVO.hints.DonationMonth.label}"
+                                           id="resId1c15">
+                                    <af:outputText value="#{row.DonationMonth}"
+                                                   shortDesc="#{bindings.TapEmpForm_ROVO.hints.DonationMonth.tooltip}"
+                                                   id="ot15"/>
+                                </af:column>
+                            </af:table>
+                    </af:panelCollection>
+                </af:panelBox>
+            </af:panelGroupLayout>
+        </f:facet>
+        <f:facet name="footerStart"/>
+        <f:facet name="footer"/>
+        <f:facet name="footerEnd"/>
+        <f:facet name="startPanel"/>
+        <f:facet name="endPanel"/>
+        <f:facet name="headerStart"/>
+        <f:facet name="header"/>
+        <f:facet name="headerEnd"/>
+    </af:pageTemplate>
+</jsp:root>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.9.14" id="searchTapFormPageDef"
+                Package="fragment">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="TapEmpForm_ROVO" RangeSize="5" DataControl="Oando_AMDataControl" id="TapEmpForm_ROVOIterator"/>
+    <searchRegion Criteria="Search_VC" Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  Binds="TapEmpForm_ROVOIterator" id="SearchVCQuery"/>
+    <iterator id="XxsshrTapEmpFormVOIterator" Binds="XxsshrTapEmpFormVO" DataControl="Oando_AMDataControl"
+              RangeSize="25"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="TapEmpForm_ROVOIterator" id="TapEmpForm_ROVO">
+      <nodeDefinition DefName="model.ro.TapEmpForm_ROVO" Name="TapEmpForm_ROVO0">
+        <AttrNames>
+          <Item Value="RequestNo"/>
+          <Item Value="RequestDate"/>
+          <Item Value="EmployeeNo"/>
+          <Item Value="EmployeeName"/>
+          <Item Value="DepartmentName"/>
+          <Item Value="PayElementName"/>
+          <Item Value="Comments"/>
+          <Item Value="ApprovalStatus"/>
+          <Item Value="TapEmpFormId"/>
+          <Item Value="BusinessUnitId"/>
+          <Item Value="PersonId"/>
+          <Item Value="TapEmpLineId"/>
+          <Item Value="AvailableFlag"/>
+          <Item Value="DonationAmount"/>
+          <Item Value="DonationMonth"/>
+          <Item Value="Trans_Active" Binds="Trans_Active"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <button IterBinding="TapEmpForm_ROVOIterator" id="Trans_Active" DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="Trans_Active"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="true"/>
+        <Item Value="false"/>
+      </ValueList>
+    </button>
+    <action id="Commit" DataControl="Oando_AMDataControl" RequiresUpdateModel="true" Action="commitTransaction"/>
+  </bindings>
+</pageDefinition>

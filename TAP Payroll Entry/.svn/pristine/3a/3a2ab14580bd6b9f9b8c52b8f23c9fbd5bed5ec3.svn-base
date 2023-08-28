@@ -1,0 +1,207 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core">
+    <af:pageTemplate viewId="/oracle/apps/uikit/common/pageTemplates/MainPageTemplate.jspx" id="pt1">
+        <f:facet name="pageContents">
+            <af:panelGroupLayout layout="vertical" id="pgl2">
+                <af:panelGroupLayout layout="vertical" id="pgl1">
+                    
+                        <af:panelHeader text="Reimbursement Payroll" id="ph1">
+                            <af:query id="qryId1" headerText="Search" disclosed="true"
+                                      value="#{bindings.SearchVCQuery.queryDescriptor}"
+                                      model="#{bindings.SearchVCQuery.queryModel}"
+                                      queryListener="#{bindings.SearchVCQuery.processQuery}"
+                                      queryOperationListener="#{bindings.SearchVCQuery.processQueryOperation}"/>
+                        </af:panelHeader>
+                    
+                </af:panelGroupLayout>
+                <af:panelBox id="pb1" showDisclosure="false" inlineStyle="border-color:transparent;">
+                    <f:facet name="toolbar"/>
+                    <af:panelCollection id="pc1" styleClass="AFStretchWidth">
+                        <f:facet name="menus"/>
+                        <f:facet name="toolbar">
+                            <af:toolbar id="t2" flex="1">
+                                <af:button text="Submit" id="b3"
+                                           actionListener="#{backingBeanScope.SearchReimbursement.onclickSubmit}"/>
+                                <af:popup id="p1" contentDelivery="lazyUncached" clientComponent="true"
+                                          binding="#{backingBeanScope.SearchReimbursement.myPopup}">
+                                    <af:dialog type="none" id="d2" contentHeight="-1" modal="false" title="Information"
+                                               contentWidth="200" inlineStyle="background-color: Highlight; border-color:skyblue;">
+                                        <f:facet name="buttonBar">
+                                            <af:button text="OK"
+                                                       actionListener="#{backingBeanScope.SearchReimbursement.hidePopup}"
+                                                       id="b2"/>
+                                        </f:facet>
+                                        <af:panelGroupLayout layout="horizontal" halign="center" id="pgl4">
+                                            <af:outputText value="#{pageFlowScope.showMsg}" inlineStyle="font-size:small; font-weight:bold; color:black;"
+                                                           binding="#{backingBeanScope.SearchReimbursement.messageBind}"
+                                                           id="ot2" partialTriggers="b3"/>
+                                        </af:panelGroupLayout>
+                                    </af:dialog>
+                                </af:popup>
+                            <af:button text="Export to Excel (All Rows)" id="b1">
+                            <af:exportCollectionActionListener exportedId="t1"
+                                                   type="excelHTML"
+                                                   filename="Reimbursement Payroll.xls"
+                                                   title="Payroll (All Rows)"/>
+                            </af:button>
+                            </af:toolbar>
+                        </f:facet>
+                        <f:facet name="statusbar"/>
+                        <af:table value="#{bindings.Reimbursement_ROVO.collectionModel}" var="row"
+                                  rows="#{bindings.Reimbursement_ROVO.rangeSize}"
+                                  emptyText="#{bindings.Reimbursement_ROVO.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                  rowBandingInterval="0" 
+                                  selectedRowKeys="#{bindings.Reimbursement_ROVO.collectionModel.selectedRow}"
+                                  selectionListener="#{bindings.Reimbursement_ROVO.collectionModel.makeCurrent}"
+                                  rowSelection="single" fetchSize="#{bindings.Reimbursement_ROVO.rangeSize}" id="t1"
+                                  scrollPolicy="page">
+                            <af:column headerText="Active" id="c1" align="center" width="100">
+                                <af:selectBooleanCheckbox value="#{row.bindings.Trans_Active.inputValue}"
+                                                          label="#{row.bindings.Trans_Active.label}"
+                                                          disabled="#{row.bindings.ApprovalStatus.inputValue ne 'APPROVED' ? true : false}"
+                                                          shortDesc="#{bindings.Reimbursement_ROVO.hints.Trans_Active.tooltip}"
+                                                          id="sbc1" autoSubmit="true"/>
+                            </af:column>
+                            <af:column headerText="#{bindings.Reimbursement_ROVO.hints.RequestNo.label}" id="c4"
+                                      align="center" width="100">
+                                <af:inputText value="#{row.bindings.RequestNo.inputValue}"
+                                              label="#{bindings.Reimbursement_ROVO.hints.RequestNo.label}"
+                                              required="#{bindings.Reimbursement_ROVO.hints.RequestNo.mandatory}"
+                                              columns="#{bindings.Reimbursement_ROVO.hints.RequestNo.displayWidth}"
+                                              maximumLength="#{bindings.Reimbursement_ROVO.hints.RequestNo.precision}"
+                                              shortDesc="#{bindings.Reimbursement_ROVO.hints.RequestNo.tooltip}"
+                                              id="it3">
+                                    <f:validator binding="#{row.bindings.RequestNo.validator}"/>
+                                </af:inputText>
+                            </af:column>
+                            <af:column headerText="#{bindings.Reimbursement_ROVO.hints.EmployeeNo.label}" id="c2"
+                                       width="150" align="center" >
+                                <af:inputText value="#{row.bindings.EmployeeNo.inputValue}"
+                                              label="#{bindings.Reimbursement_ROVO.hints.EmployeeNo.label}"
+                                              required="#{bindings.Reimbursement_ROVO.hints.EmployeeNo.mandatory}"
+                                              columns="#{bindings.Reimbursement_ROVO.hints.EmployeeNo.displayWidth}"
+                                              maximumLength="#{bindings.Reimbursement_ROVO.hints.EmployeeNo.precision}"
+                                              shortDesc="#{bindings.Reimbursement_ROVO.hints.EmployeeNo.tooltip}"
+                                              id="it1" >
+                                    <f:validator binding="#{row.bindings.EmployeeNo.validator}"/>
+                                </af:inputText>
+                            </af:column>
+                            <af:column headerText="#{bindings.Reimbursement_ROVO.hints.EmployeeName.label}" id="c3"
+                                     align="center"  width="150">
+                                <af:inputText value="#{row.bindings.EmployeeName.inputValue}"
+                                              label="#{bindings.Reimbursement_ROVO.hints.EmployeeName.label}"
+                                              required="#{bindings.Reimbursement_ROVO.hints.EmployeeName.mandatory}"
+                                              columns="#{bindings.Reimbursement_ROVO.hints.EmployeeName.displayWidth}"
+                                              maximumLength="#{bindings.Reimbursement_ROVO.hints.EmployeeName.precision}"
+                                              shortDesc="#{bindings.Reimbursement_ROVO.hints.EmployeeName.tooltip}"
+                                              id="it2">
+                                    <f:validator binding="#{row.bindings.EmployeeName.validator}"/>
+                                </af:inputText>
+                            </af:column>
+                            <af:column headerText="#{bindings.Reimbursement_ROVO.hints.RequestDate.label}" id="c11" 
+                                       rendered="false">
+                                <af:outputText value="#{row.RequestDate}"
+                                               shortDesc="#{bindings.Reimbursement_ROVO.hints.RequestDate.tooltip}"
+                                               id="ot1">
+                                    <af:convertDateTime pattern="#{bindings.Reimbursement_ROVO.hints.RequestDate.format}"/>
+                                </af:outputText>
+                            </af:column>
+                            <af:column headerText="#{bindings.Reimbursement_ROVO.hints.RequestDate.label}" id="c5" 
+                                    align="center"   width="150">
+                                <af:inputDate value="#{row.bindings.RequestDate.inputValue}" readOnly="true"
+                                              label="#{bindings.Reimbursement_ROVO.hints.RequestDate.label}"
+                                              required="#{bindings.Reimbursement_ROVO.hints.RequestDate.mandatory}"
+                                              columns="#{bindings.Reimbursement_ROVO.hints.RequestDate.displayWidth}"
+                                              shortDesc="#{bindings.Reimbursement_ROVO.hints.RequestDate.tooltip}"
+                                              id="id1">
+                                    <f:validator binding="#{row.bindings.RequestDate.validator}"/>
+                                    <af:convertDateTime pattern="dd-MMM-yyyy"/>
+                                    <!--<af:convertDateTime pattern="#{bindings.Reimbursement_ROVO.hints.RequestDate.format}"/>-->
+                                </af:inputDate>
+                                <f:facet name="filter">
+                                    <af:inputDate value="#{bindings.SearchVCQuery.queryDescriptor.filterConjunctionCriterion.criterionMap.RequestDate.value}"
+                                                  id="id2">
+                                        <af:convertDateTime pattern="#{bindings.Reimbursement_ROVO.hints.RequestDate.format}"/>
+                                    </af:inputDate>
+                                </f:facet>
+                            </af:column>
+                            <af:column headerText="#{bindings.Reimbursement_ROVO.hints.DepartmentName.label}" id="c6"
+                                       align="center" width="150">
+                                <af:inputText value="#{row.bindings.DepartmentName.inputValue}"
+                                              label="#{bindings.Reimbursement_ROVO.hints.DepartmentName.label}"
+                                              required="#{bindings.Reimbursement_ROVO.hints.DepartmentName.mandatory}"
+                                              columns="#{bindings.Reimbursement_ROVO.hints.DepartmentName.displayWidth}"
+                                              maximumLength="#{bindings.Reimbursement_ROVO.hints.DepartmentName.precision}"
+                                              shortDesc="#{bindings.Reimbursement_ROVO.hints.DepartmentName.tooltip}"
+                                              id="it4">
+                                    <f:validator binding="#{row.bindings.DepartmentName.validator}"/>
+                                </af:inputText>
+                            </af:column>
+                            <af:column headerText="#{bindings.Reimbursement_ROVO.hints.PayElementName.label}" id="c7"
+                                       align="center" width="150">
+                                <af:inputText value="#{row.bindings.PayElementName.inputValue}"
+                                              label="#{bindings.Reimbursement_ROVO.hints.PayElementName.label}"
+                                              required="#{bindings.Reimbursement_ROVO.hints.PayElementName.mandatory}"
+                                              columns="#{bindings.Reimbursement_ROVO.hints.PayElementName.displayWidth}"
+                                              maximumLength="#{bindings.Reimbursement_ROVO.hints.PayElementName.precision}"
+                                              shortDesc="#{bindings.Reimbursement_ROVO.hints.PayElementName.tooltip}"
+                                              id="it5">
+                                    <f:validator binding="#{row.bindings.PayElementName.validator}"/>
+                                </af:inputText>
+                            </af:column>
+                            <af:column headerText="#{bindings.Reimbursement_ROVO.hints.ReimbursementType.label}" id="c8"
+                                    align="center"   width="150">
+                                <af:inputText value="#{row.bindings.ReimbursementType.inputValue}"
+                                              label="#{bindings.Reimbursement_ROVO.hints.ReimbursementType.label}"
+                                              required="#{bindings.Reimbursement_ROVO.hints.ReimbursementType.mandatory}"
+                                              columns="#{bindings.Reimbursement_ROVO.hints.ReimbursementType.displayWidth}"
+                                              maximumLength="#{bindings.Reimbursement_ROVO.hints.ReimbursementType.precision}"
+                                              shortDesc="#{bindings.Reimbursement_ROVO.hints.ReimbursementType.tooltip}"
+                                              id="it6">
+                                    <f:validator binding="#{row.bindings.ReimbursementType.validator}"/>
+                                </af:inputText>
+                            </af:column>
+                            <af:column headerText="#{bindings.Reimbursement_ROVO.hints.ReimburesementAmount.label}"
+                                     align="center"  id="c9" width="150">
+                                <af:inputText value="#{row.bindings.ReimburesementAmount.inputValue}"
+                                              label="#{bindings.Reimbursement_ROVO.hints.ReimburesementAmount.label}"
+                                              required="#{bindings.Reimbursement_ROVO.hints.ReimburesementAmount.mandatory}"
+                                              columns="#{bindings.Reimbursement_ROVO.hints.ReimburesementAmount.displayWidth}"
+                                              maximumLength="#{bindings.Reimbursement_ROVO.hints.ReimburesementAmount.precision}"
+                                              shortDesc="#{bindings.Reimbursement_ROVO.hints.ReimburesementAmount.tooltip}"
+                                              id="it7">
+                                    <f:validator binding="#{row.bindings.ReimburesementAmount.validator}"/>
+                                    <af:convertNumber minFractionDigits="2" maxFractionDigits="2"
+                                                      pattern="###,###,###,###"/>
+                                    <!--<af:convertNumber groupingUsed="false"
+                                                      pattern="#{bindings.Reimbursement_ROVO.hints.ReimburesementAmount.format}"/>-->
+                                </af:inputText>
+                            </af:column>
+                            <af:column headerText="#{bindings.Reimbursement_ROVO.hints.ApprovalStatus.label}" id="c10"
+                                      align="center" width="150">
+                                <af:inputText value="#{row.bindings.ApprovalStatus.inputValue}" 
+                                              label="#{bindings.Reimbursement_ROVO.hints.ApprovalStatus.label}"
+                                              required="#{bindings.Reimbursement_ROVO.hints.ApprovalStatus.mandatory}"
+                                              columns="#{bindings.Reimbursement_ROVO.hints.ApprovalStatus.displayWidth}"
+                                              maximumLength="#{bindings.Reimbursement_ROVO.hints.ApprovalStatus.precision}"
+                                              shortDesc="#{bindings.Reimbursement_ROVO.hints.ApprovalStatus.tooltip}"
+                                              id="it8">
+                                    <f:validator binding="#{row.bindings.ApprovalStatus.validator}"/>
+                                </af:inputText>
+                            </af:column>
+                        </af:table>
+                    </af:panelCollection>
+                </af:panelBox>
+            </af:panelGroupLayout>
+        </f:facet>
+        <f:facet name="footerStart"/>
+        <f:facet name="footer"/>
+        <f:facet name="footerEnd"/>
+        <f:facet name="startPanel"/>
+        <f:facet name="endPanel"/>
+        <f:facet name="headerStart"/>
+        <f:facet name="header"/>
+        <f:facet name="headerEnd"/>
+    </af:pageTemplate>
+</jsp:root>

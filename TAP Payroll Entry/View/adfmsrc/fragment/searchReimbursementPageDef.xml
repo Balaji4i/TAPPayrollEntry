@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.9.14" id="searchReimbursementPageDef"
+                Package="fragment">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="Reimbursement_ROVO" RangeSize="5" DataControl="Oando_AMDataControl"
+              id="Reimbursement_ROVOIterator"/>
+    <searchRegion Criteria="Search_VC" Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  Binds="Reimbursement_ROVOIterator" id="SearchVCQuery"/>
+    <iterator id="Reimbursement_VOIterator" Binds="Reimbursement_VO" DataControl="Oando_AMDataControl" RangeSize="25"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="Reimbursement_ROVOIterator" id="Reimbursement_ROVO">
+      <nodeDefinition DefName="model.ro.Reimbursement_ROVO" Name="Reimbursement_ROVO0">
+        <AttrNames>
+          <Item Value="Trans_Active"/>
+          <Item Value="RequestNo"/>
+          <Item Value="EmployeeNo"/>
+          <Item Value="EmployeeName"/>
+          <Item Value="RequestDate"/>
+          <Item Value="DepartmentName"/>
+          <Item Value="PayElementName"/>
+          <Item Value="ReimbursementType"/>
+          <Item Value="ReimburesementAmount"/>
+          <Item Value="ApprovalStatus"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <button IterBinding="Reimbursement_ROVOIterator" id="Trans_Active" DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="Trans_Active"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="true"/>
+        <Item Value="false"/>
+      </ValueList>
+    </button>
+    <action id="Commit" DataControl="Oando_AMDataControl" RequiresUpdateModel="true" Action="commitTransaction"/>
+  </bindings>
+</pageDefinition>

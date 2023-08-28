@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.9.14" id="AddEditDutyPageDef"
+                Package="fragment">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="DutyAllowance_VO" RangeSize="25" DataControl="Oando_AMDataControl" id="DutyAllowance_VOIterator"/>
+  </executables>
+  <bindings>
+    <listOfValues IterBinding="DutyAllowance_VOIterator" StaticList="false" Uses="LOV_Trans_Allowance"
+                  id="Trans_Allowance"/>
+    <attributeValues IterBinding="DutyAllowance_VOIterator" id="TransactionDate">
+      <AttrNames>
+        <Item Value="TransactionDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="DutyAllowance_VOIterator" id="AllowanceRate">
+      <AttrNames>
+        <Item Value="AllowanceRate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="DutyAllowance_VOIterator" id="StartDate">
+      <AttrNames>
+        <Item Value="StartDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="DutyAllowance_VOIterator" id="EndDate">
+      <AttrNames>
+        <Item Value="EndDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="DutyAllowance_VOIterator" id="AllowanceDays">
+      <AttrNames>
+        <Item Value="AllowanceDays"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="DutyAllowance_VOIterator" id="AllowanceAmount">
+      <AttrNames>
+        <Item Value="AllowanceAmount"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="DutyAllowance_VOIterator" id="Comments">
+      <AttrNames>
+        <Item Value="Comments"/>
+      </AttrNames>
+    </attributeValues>
+    <action id="Commit" DataControl="Oando_AMDataControl" RequiresUpdateModel="true" Action="commitTransaction"/>
+    <action id="Rollback" DataControl="Oando_AMDataControl" RequiresUpdateModel="false" Action="rollbackTransaction"/>
+    <attributeValues IterBinding="DutyAllowance_VOIterator" id="ExtraDutyAllowanceId">
+      <AttrNames>
+        <Item Value="ExtraDutyAllowanceId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="DutyAllowance_VOIterator" id="Name_Trns">
+      <AttrNames>
+        <Item Value="Name_Trns"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="DutyAllowance_VOIterator" id="Number_Trns">
+      <AttrNames>
+        <Item Value="Number_Trns"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="DutyAllowance_VOIterator" id="Email_Trns">
+      <AttrNames>
+        <Item Value="Email_Trns"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="DutyAllowance_VOIterator" id="Group_Trns">
+      <AttrNames>
+        <Item Value="Group_Trns"/>
+      </AttrNames>
+    </attributeValues>
+    <listOfValues IterBinding="DutyAllowance_VOIterator" StaticList="false" Uses="LOV_AllowanceType"
+                  id="AllowanceType"/>
+    <attributeValues IterBinding="DutyAllowance_VOIterator" id="ApprovalStatus">
+      <AttrNames>
+        <Item Value="ApprovalStatus"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="DutyAllowance_VOIterator" id="ExtraDutyAllowanceNo">
+      <AttrNames>
+        <Item Value="ExtraDutyAllowanceNo"/>
+      </AttrNames>
+    </attributeValues>
+  </bindings>
+</pageDefinition>
